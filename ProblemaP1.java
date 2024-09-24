@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Solución por
  * Juan David Torres Albarracín - 202317608
- * Daniel Bolivar -
+ * Daniel Bolivar - 202310329
  */
 public class ProblemaP1 {
 
