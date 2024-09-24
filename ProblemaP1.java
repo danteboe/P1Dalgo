@@ -1,31 +1,48 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 
 /**
- * Solución por 
+ * Solución por
  * Juan David Torres Albarracín - 202317608
- * Daniel Bolivar - 
+ * Daniel Bolivar -
  */
 public class ProblemaP1 {
 
     public static void main(String[] args) {
-        int[][]map=
-        /*{
-            {0,9,1,10,0},
-            {-1,5,5,25,5},
-            {1,5,1,5,7},
-            {5,5,5,15,2},
-            {55,3,0,4,1}
-            
-        };*/
-        {
-            {0,9,1,10,0},
-            {100,100,5,0,5},
-            {100,5,100,0,7},
-            {5,5,5,15,2},
-            {55,3,0,4,1}
-            
-        };
-        System.out.println(maxReliquias(map));
+        try {
+            InputStreamReader is = new InputStreamReader(System.in);
+            BufferedReader br = new BufferedReader(is);
+
+            // Leer número de casos
+            String line = br.readLine();
+            int casos = Integer.parseInt(line);
+
+            for (int i = 0; i < casos; i++) {
+                // Leer tamaño de la matriz R y C
+                line = br.readLine();
+                String[] dimensiones = line.split(" ");
+                int R = Integer.parseInt(dimensiones[0]);
+                int C = Integer.parseInt(dimensiones[1]);
+
+                // Inicializar la matriz para este caso
+                int[][] map = new int[R][C];
+
+                // Poblar la matriz
+                for (int r = 0; r < R; r++) {
+                    line = br.readLine();
+                    String[] fila = line.split(" ");
+                    for (int c = 0; c < C; c++) {
+                        map[r][c] = Integer.parseInt(fila[c]);
+                    }
+                }
+
+                System.out.println(maxReliquias(map));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /*
@@ -37,14 +54,14 @@ public class ProblemaP1 {
             return 0;
         }
         return num;
-    }    
+    }
 
     //Se usa para crear copias de la matriz original
     public static int[][] deepCopy(int[][] original) {
         if (original == null) {
             return null;
         }
-    
+
         final int[][] result = new int[original.length][];
         for (int i = 0; i < original.length; i++) {
             result[i] = Arrays.copyOf(original[i], original[i].length);
@@ -54,7 +71,7 @@ public class ProblemaP1 {
 
     public static int maxReliquias(int[][]map ){
         int max = -1;
-         
+
         int[][] mapCopy1 = deepCopy(map);
         int[][] mapCopy2 = deepCopy(map);
         int[][] mapCopy3 = deepCopy(map);
@@ -100,7 +117,7 @@ public class ProblemaP1 {
     }
 
     public static int maxReliquiasIndiana(int[][]map ){
-        
+
         int maxReliquias = -1;
         int r = map.length;
         int c = map[0].length;
@@ -134,7 +151,6 @@ public class ProblemaP1 {
             }
         }
         }
-        System.out.println(maxI+" "+ maxJ+" "+ maxReliquias);
         //Verifica que haya llegado a la mitad de la matriz, o que se hayan recuperado reliquias
         if(maxI!=mitad||maxReliquias<=0){
             return -1;
@@ -143,8 +159,6 @@ public class ProblemaP1 {
         int j = maxJ;
      //Backtracking para modificar la matriz según el camino recorrido
      while(i>0&&j>=0){
-        System.out.println("Entro backtracking");
-        System.out.println(i+" "+j);
         if(map[i][j]>=0){
             map[i][j]=0;
             if(j==0){
@@ -160,7 +174,7 @@ public class ProblemaP1 {
                 }else{
                     i--;
                     j--;
-    
+
                 }
             }else{
                 if(dp[i-1][j-1]>dp[i-1][j]&&dp[i-1][j-1]>dp[i-1][j+1]){
@@ -180,7 +194,6 @@ public class ProblemaP1 {
     }
 
     public static int maxReliquiasMarian(int[][]map ){
-        System.out.println("Marian");
         int maxReliquias = -1;
         int r = map.length;
         int c = map[0].length;
@@ -229,7 +242,7 @@ public class ProblemaP1 {
                 }else{
                     i--;
                     j--;
-    
+
                 }
             }else if(j==0){
                 if(dp[i-1][j]>dp[i-1][j+1]){
@@ -240,7 +253,7 @@ public class ProblemaP1 {
                 }
             }else{
                 if(dp[i-1][j-1]>dp[i-1][j]&&dp[i-1][j-1]>dp[i-1][j+1]){
-                    //Actualiza las reliquias a 0. 
+                    //Actualiza las reliquias a 0.
                     i--;
                     j--;
                 }else if(dp[i-1][j-1]<dp[i-1][j]&&dp[i-1][j]>dp[i-1][j+1]){
@@ -251,14 +264,12 @@ public class ProblemaP1 {
                 }
             }
         }
-        
+
      }
-    printMatrix(map);
     return maxReliquias;
     }
 
     public static int maxReliquiasSallah(int[][]map ){
-        System.out.println("Sallah");
         int maxReliquias = -1;
         int r = map.length;
         int c = map[0].length;
@@ -299,15 +310,15 @@ public class ProblemaP1 {
             return -1;
         }
 
-        map[maxI][maxJ]=0;
+        map[maxI][maxJ]=0; // i use arch btw
 
         return maxReliquias;
     }
-    
+
     public static void printMatrix(int[][] matrix){
         for(int i = 0;i<matrix.length;i++){
             System.out.println(Arrays.toString(matrix[i]));
         }
     }
 
-}  
+}
